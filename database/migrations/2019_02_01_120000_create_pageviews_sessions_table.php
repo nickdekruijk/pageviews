@@ -16,7 +16,7 @@ class CreatePageViewsSessionsTable extends Migration
             $table->increments('id');
             $table->ipAddress('ip')->nullable();
             $table->string('agent')->nullable();
-            $table->boolean('parsed')->default(0);
+            $table->boolean('parsed')->default(0)->index();
             $table->string('country', 5)->nullable();
             $table->string('region', 50)->nullable();
             $table->string('city', 50)->nullable();
