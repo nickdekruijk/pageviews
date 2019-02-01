@@ -12,7 +12,7 @@ class CreatePageViewsSessionsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('pageviews.prefix' . 'sessions', 'pageviews_sessions'), function (Blueprint $table) {
+        Schema::create(config('pageviews.database_prefix', 'pageviews_') . 'sessions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('session_id')->unique()->index();
             $table->ipAddress('ip')->nullable();
@@ -34,6 +34,6 @@ class CreatePageViewsSessionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('pageviews.prefix' . 'sessions', 'pageviews_sessions'));
+        Schema::drop(config('pageviews.database_prefix', 'pageviews_') . 'sessions');
     }
 }

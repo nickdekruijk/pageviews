@@ -12,7 +12,7 @@ class CreatePageviewsHitsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('pageviews.prefix' . 'hits', 'pageviews_hits'), function (Blueprint $table) {
+        Schema::create(config('pageviews.database_prefix', 'pageviews_') . 'hits', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('session_id')->unsigned();
             $table->string('url')->nullable();
@@ -27,6 +27,6 @@ class CreatePageviewsHitsTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('pageviews.prefix' . 'hits', 'pageviews_hits'));
+        Schema::drop(config('pageviews.database_prefix', 'pageviews_') . 'hits');
     }
 }
