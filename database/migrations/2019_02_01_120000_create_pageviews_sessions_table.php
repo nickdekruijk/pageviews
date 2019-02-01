@@ -14,6 +14,7 @@ class CreatePageViewsSessionsTable extends Migration
     {
         Schema::create(config('pageviews.database_prefix', 'pageviews_') . 'sessions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->timestamp('time')->index();
             $table->ipAddress('ip')->nullable();
             $table->string('agent')->nullable();
             $table->boolean('parsed')->default(0)->index();
@@ -23,7 +24,6 @@ class CreatePageViewsSessionsTable extends Migration
             $table->string('postal', 20)->nullable();
             $table->decimal('lat', 10, 8)->nullable();
             $table->decimal('lng', 11, 8)->nullable();
-            $table->timestamps();
         });
     }
 

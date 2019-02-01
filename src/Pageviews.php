@@ -6,6 +6,7 @@ use DB;
 use Session;
 use NickDeKruijk\Pageviews\Models\PageviewSession;
 use NickDeKruijk\Pageviews\Models\PageviewHit;
+use Carbon\Carbon;
 
 class Pageviews
 {
@@ -29,6 +30,7 @@ class Pageviews
             $session = [
                 'ip' => config('pageviews.anonymize_ip', true) ? self::anonymize_ip($request->ip()) : $request->ip(),
                 'agent' => $request->header('User-Agent'),
+                'time' => Carbon::now(),
             ];
             $session['id'] = DB::table(config('pageviews.database_prefix', 'pageviews_') . 'sessions')->insertGetId($session);
             Session::put(config('pageviews.session_variable', 'pageviews'), $session);
@@ -38,6 +40,7 @@ class Pageviews
         DB::table(config('pageviews.database_prefix', 'pageviews_') . 'hits')->insert([
             'session_id' => $session['id'],
             'url' => url()->full(),
+            'time' => Carbon::now(),
         ]);
     }
 }

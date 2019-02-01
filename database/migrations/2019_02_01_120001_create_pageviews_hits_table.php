@@ -14,10 +14,10 @@ class CreatePageviewsHitsTable extends Migration
     {
         Schema::create(config('pageviews.database_prefix', 'pageviews_') . 'hits', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->timestamp('time')->index();
             $table->integer('session_id')->unsigned();
             $table->string('url')->nullable();
             $table->foreign('session_id')->references('id')->on(config('pageviews.database_prefix', 'pageviews_') . 'sessions');
-            $table->timestamps();
         });
     }
 
