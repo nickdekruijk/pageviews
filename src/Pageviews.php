@@ -4,6 +4,8 @@ namespace NickDeKruijk\Pageviews;
 
 use DB;
 use Session;
+use NickDeKruijk\Pageviews\Models\PageviewSession;
+use NickDeKruijk\Pageviews\Models\PageviewHit;
 
 class Pageviews
 {
