@@ -48,33 +48,60 @@ class Pageviews
     // Return array
     public static function visitors($density = 24 * 3600, Carbon $from = null, Carbon $to = null)
     {
-        $sessions = PageviewSession::from($from)->to($to)->get();
         $data = [];
-        $start = $end = null;
-        foreach($sessions as $session) {
+        $start = $end = time();
+        foreach(PageviewSession::from($from)->to($to)->get() as $session) {
             $timeslot = floor($session->time->getTimestamp() / $density) * $density;
-            if ($timeslot < $start || $start == null) {
-                $start = $timeslot;
-            }
-            if ($timeslot > $end || $end == null) {
-                $end = $timeslot;
-            }
-            if (empty($data[$timeslot])) {
-                $data[$timeslot] = 1;
+            $start = min($start, $timeslot);
+            $end = max($end, $timeslot);
+            if (empty($data[$timeslot]['sessions'])) {
+                $data[$timeslot]['sessions'] = 1;
             } else {
-                $data[$timeslot] += 1;
+                $data[$timeslot]['sessions'] += 1;
+            }
+        }
+        foreach(PageviewHit::from($from)->to($to)->get() as $hit) {
+            $timeslot = floor($hit->time->getTimestamp() / $density) * $density;
+            $start = min($start, $timeslot);
+            $end = max($end, $timeslot);
+            if (empty($data[$timeslot]['hits'])) {
+                $data[$timeslot]['hits'] = 1;
+            } else {
+                $data[$timeslot]['hits'] += 1;
             }
         }
         for($timeslot = $start; $timeslot <= $end; $timeslot += $density) {
-            if (empty($data[$timeslot])) {
-                $data[$timeslot] = 0;
+            if (empty($data[$timeslot]['sessions'])) {
+                $data[$timeslot]['sessions'] = 0;
+            }
+            if (empty($data[$timeslot]['hits'])) {
+                $data[$timeslot]['hits'] = 0;
             }
         }
         ksort($data);
         $labels = [];
-        foreach($data as $timeslot => $visitors) {
+        foreach($data as $timeslot => $row) {
             $labels[$timeslot] = Carbon::createFromTimestamp($timeslot)->formatLocalized('%a %e %h %H:%M');
         }
-        return json_encode(['labels' => array_values($labels), 'datasets' => [['label' => 'Unique visitors', 'data' => array_values($data)]]],JSON_PRETTY_PRINT);
+        return json_encode([
+            'labels' => array_values($labels),
+            'datasets' => [
+                [
+                    'label' => 'Unique visitors',
+                    'data' => array_column($data, 'sessions'),
+                    'borderColor' => '#4455CC',
+                    'backgroundColor' => '#ccddee'
+                ],[
+                    'label' => 'Pageviews',
+                    'data' => array_column($data, 'hits'),
+                    'borderWidth' => 1
+                ],[
+                    'label' => 'Active users',
+                    'data' => array_column($data, 'active'),
+                    'borderColor' => '#44CC55',
+                    'borderWidth' => 1
+                ]
+            ]
+        ], JSON_PRETTY_PRINT);
     }
 }
