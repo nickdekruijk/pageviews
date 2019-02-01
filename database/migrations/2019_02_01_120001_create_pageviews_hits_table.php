@@ -16,6 +16,7 @@ class CreatePageviewsHitsTable extends Migration
             $table->increments('id');
             $table->integer('session_id')->unsigned();
             $table->string('url')->nullable();
+            $table->foreign('session_id')->references('id')->on(config('pageviews.database_prefix', 'pageviews_') . 'sessions');
             $table->timestamps();
         });
     }
