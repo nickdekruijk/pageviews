@@ -17,6 +17,9 @@ class CreatePageviewsHitsTable extends Migration
             $table->timestamp('time')->index();
             $table->integer('session_id')->unsigned();
             $table->string('url')->nullable();
+            $table->string('referer')->nullable();
+            $table->boolean('parsed')->default(0)->index();
+
             $table->foreign('session_id')->references('id')->on(config('pageviews.database_prefix', 'pageviews_') . 'sessions');
         });
     }

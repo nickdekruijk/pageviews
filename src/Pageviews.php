@@ -40,6 +40,7 @@ class Pageviews
         DB::table(config('pageviews.database_prefix', 'pageviews_') . 'hits')->insert([
             'session_id' => $session['id'],
             'url' => url()->full(),
+            'referer' => $request->header('Referer'),
             'time' => Carbon::now(),
         ]);
     }
