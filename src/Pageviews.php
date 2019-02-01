@@ -43,4 +43,37 @@ class Pageviews
             'time' => Carbon::now(),
         ]);
     }
+
+    // Return array
+    public static function visitors($density = 24 * 3600, Carbon $from = null, Carbon $to = null)
+    {
+        $sessions = PageviewSession::from($from)->to($to)->get();
+        $data = [];
+        $start = $end = null;
+        foreach($sessions as $session) {
+            $timeslot = floor($session->time->getTimestamp() / $density) * $density;
+            if ($timeslot < $start || $start == null) {
+                $start = $timeslot;
+            }
+            if ($timeslot > $end || $end == null) {
+                $end = $timeslot;
+            }
+            if (empty($data[$timeslot])) {
+                $data[$timeslot] = 1;
+            } else {
+                $data[$timeslot] += 1;
+            }
+        }
+        for($timeslot = $start; $timeslot <= $end; $timeslot += $density) {
+            if (empty($data[$timeslot])) {
+                $data[$timeslot] = 0;
+            }
+        }
+        ksort($data);
+        $labels = [];
+        foreach($data as $timeslot => $visitors) {
+            $labels[$timeslot] = Carbon::createFromTimestamp($timeslot)->formatLocalized('%a %e %h %H:%M');
+        }
+        return json_encode(['labels' => array_values($labels), 'datasets' => [['label' => 'Unique visitors', 'data' => array_values($data)]]],JSON_PRETTY_PRINT);
+    }
 }
