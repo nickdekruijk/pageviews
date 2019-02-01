@@ -14,15 +14,15 @@ class CreatePageViewsSessionsTable extends Migration
     {
         Schema::create(config('pageviews.database_prefix', 'pageviews_') . 'sessions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('session_id')->unique()->index();
             $table->ipAddress('ip')->nullable();
+            $table->string('agent')->nullable();
+            $table->boolean('parsed')->default(0);
             $table->string('country', 5)->nullable();
             $table->string('region', 50)->nullable();
             $table->string('city', 50)->nullable();
             $table->string('postal', 20)->nullable();
             $table->decimal('lat', 10, 8)->nullable();
             $table->decimal('lng', 11, 8)->nullable();
-            $table->string('agent')->nullable();
             $table->timestamps();
         });
     }
