@@ -19,6 +19,10 @@ class PageviewsServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
+        if (config('pageviews.middleware', true)) {
+            $this->app['router']->pushMiddlewareToGroup('web', PageviewsMiddleware::class);
+        }
+
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('pageviews.php'),

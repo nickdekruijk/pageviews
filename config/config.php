@@ -23,4 +23,20 @@ return [
     */
     'session_variable' => 'pageviews',
 
+    /*
+    |--------------------------------------------------------------------------
+    | middleware
+    |--------------------------------------------------------------------------
+    | Enable or disable visitor tracking for all web middleware group requests
+    */
+    'middleware' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | anonymize_ip
+    |--------------------------------------------------------------------------
+    | Anonymize the IP addresses gathered for privacy reasons
+    */
+    'anonymize_ip' => true,
+
 ];
