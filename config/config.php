@@ -12,6 +12,6 @@ return [
     | Prefix the database tables created by the package migration with this
     | By default we create a 'pageviews_sessions' and 'pageviews_hits' table
     */
-    'database_prefix' = 'pageviews_',
+    'database_prefix' => 'pageviews_',
 
 ];
