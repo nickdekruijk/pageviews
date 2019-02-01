@@ -19,9 +19,9 @@ return [
     | session_variable
     |--------------------------------------------------------------------------
     | The session variable we use to track a visitor session
-    | By default we create a 'pageviews' session as a array
+    | By default we create a 'pageviews_session' session array variable
     */
-    'session_variable' => 'pageviews',
+    'session_variable' => 'pageviews_session',
 
     /*
     |--------------------------------------------------------------------------
