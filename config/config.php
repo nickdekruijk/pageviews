@@ -14,4 +14,13 @@ return [
     */
     'database_prefix' => 'pageviews_',
 
+    /*
+    |--------------------------------------------------------------------------
+    | session_variable
+    |--------------------------------------------------------------------------
+    | The session variable we use to track a visitor session
+    | By default we create a 'pageviews' session as a array
+    */
+    'session_variable' => 'pageviews',
+
 ];
