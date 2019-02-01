@@ -5,7 +5,8 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/nickdekruijk/pageviews.svg?style=flat-square)](https://scrutinizer-ci.com/g/nickdekruijk/pageviews)
 [![Total Downloads](https://img.shields.io/packagist/dt/nickdekruijk/pageviews.svg?style=flat-square)](https://packagist.org/packages/nickdekruijk/pageviews)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+A simple pageviews counter/tracker for your Laravel Application. Still in early development.
+It will anonymize visitors to respect privacy laws.
 
 ## Installation
 
@@ -16,8 +17,14 @@ composer require nickdekruijk/pageviews
 ```
 
 ## Usage
-
-More later...
+If you don't like the default configuration edit `config/pageviews.php` after publishing the config file with:
+```bash
+php artisan vendor:publish --tag=config --provider="NickDeKruijk\Pageviews\PageviewsServiceProvider"
+```
+Then run the migration
+```bash
+php artisan migrate
+```
 
 ### Security
 
