@@ -13,7 +13,7 @@ class CreatePageViewsSessionsTable extends Migration
     public function up()
     {
         Schema::create(config('pageviews.database_prefix', 'pageviews_') . 'sessions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->ipAddress('ip')->nullable();
             $table->string('agent')->nullable();
             $table->boolean('parsed')->default(0)->index();

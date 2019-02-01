@@ -13,7 +13,7 @@ class CreatePageviewsHitsTable extends Migration
     public function up()
     {
         Schema::create(config('pageviews.database_prefix', 'pageviews_') . 'hits', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('session_id')->unsigned();
             $table->string('url')->nullable();
             $table->foreign('session_id')->references('id')->on(config('pageviews.database_prefix', 'pageviews_') . 'sessions');
