@@ -3,15 +3,17 @@
     "description": "Track pageviews in your Laravel app",
     "keywords": [
         "nickdekruijk",
-        "pageviews"
+        "pageviews",
+        "laravel",
+        "analytics",
+        "tracker"
     ],
     "homepage": "https://github.com/nickdekruijk/pageviews",
     "license": "MIT",
     "authors": [
         {
             "name": "Nick de Kruijk",
-            "email": "git@nickdekruijk.nl",
-            "role": "Developer"
+            "email": "git@nickdekruijk.nl"
         }
     ],
     "require": {
@@ -26,16 +28,6 @@
             "NickDeKruijk\\Pageviews\\": "src"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "NickDeKruijk\\Pageviews\\Tests\\": "tests"
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
-    },
     "config": {
         "sort-packages": true
     },
@@ -45,7 +37,7 @@
                 "NickDeKruijk\\Pageviews\\PageviewsServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "NickDeKruijk\Pageviews\\PageviewsFacade"
+                "Pageviews": "NickDeKruijk\\Pageviews\\PageviewsFacade"
             }
         }
     }
