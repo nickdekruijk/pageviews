@@ -6,7 +6,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/nickdekruijk/pageviews.svg?style=flat-square)](https://packagist.org/packages/nickdekruijk/pageviews)
 
 A simple pageviews counter/tracker for your Laravel Application. Still in early development.
-It will anonymize visitors to respect privacy laws.
+It will anonymize visitor ip addresses by default to respect privacy laws.
 
 ## Installation
 
@@ -16,7 +16,7 @@ You can install the package via composer:
 composer require nickdekruijk/pageviews
 ```
 
-## Usage
+## Getting started
 If you don't like the default configuration edit `config/pageviews.php` after publishing the config file with:
 ```bash
 php artisan vendor:publish --tag=config --provider="NickDeKruijk\Pageviews\PageviewsServiceProvider"
