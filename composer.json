@@ -18,6 +18,7 @@
     ],
     "require": {
         "php": "^7.1",
+        "piwik/device-detector": "^3.11",
         "bobey/geoip2-geolite2-composer": "*",
         "geoip2/geoip2": "~2.0"
     },
