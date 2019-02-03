@@ -17,7 +17,9 @@
         }
     ],
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "bobey/geoip2-geolite2-composer",
+        "geoip2/geoip2": "~2.0"
     },
     "require-dev": {
         "illuminate/support": "5.7.*",
