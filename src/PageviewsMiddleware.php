@@ -15,7 +15,7 @@ class PageviewsMiddleware
      */
     public function handle($request, Closure $next)
     {
-        Pageviews::track($request);
+        Pageviews::track();
         $response = $next($request);
         return $response;
     }
