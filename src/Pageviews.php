@@ -38,6 +38,15 @@ class Pageviews
     // Track a visitor pageview
     public static function track($forceNewSession = false)
     {
+        // Check for blacklisted uri
+        $path = request()->getPathInfo();
+        foreach(config('pageviews.blacklist') as $pattern) {
+            if (preg_match($pattern, $path)) {
+                return false;
+            }
+        }
+
+        // Create session if needed
         $session = Session::get(config('pageviews.session_variable', 'pageviews'));
         if ($forceNewSession || !$session) {
             $session = static::getVisitData(request()->header('User-Agent'));
@@ -55,6 +64,7 @@ class Pageviews
             Session::save();
         }
 
+        // Try writing pageview hit
         try {
             DB::table(config('pageviews.database_prefix', 'pageviews_') . 'hits')->insert([
                 'session_id' => $session['id'],
@@ -70,6 +80,8 @@ class Pageviews
                 static::track(true);
             }
         }
+
+        return true;
     }
 
     // Based on voerro/laravel-visitor-tracker/src/Tracker.php

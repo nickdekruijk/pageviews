@@ -39,4 +39,17 @@ return [
     */
     'anonymize_ip' => true,
 
+    /*
+    |--------------------------------------------------------------------------
+    | blacklist
+    |--------------------------------------------------------------------------
+    | Don't track uri's starting with (regex against url path without hostname)
+    */
+    'blacklist' => [
+//         '/^\/'.config('admin.adminpath').'\//', # Don't track nickdekruijk/admin pages
+//         '/^\/admin\//', # Don't track pages that start with domain.com/admin/
+//         '/^\/secret\/$/', # Don't track pages that matches with domain.com/secret/
+//         '/\.php$/', # Don't track pages the end with .php
+    ],
+
 ];
