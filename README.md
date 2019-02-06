@@ -1,9 +1,10 @@
 # Track pageviews in your Laravel app
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/nickdekruijk/pageviews.svg?style=flat-square)](https://packagist.org/packages/nickdekruijk/pageviews)
-[![Build Status](https://img.shields.io/travis/nickdekruijk/pageviews/master.svg?style=flat-square)](https://travis-ci.org/nickdekruijk/pageviews)
-[![Quality Score](https://img.shields.io/scrutinizer/g/nickdekruijk/pageviews.svg?style=flat-square)](https://scrutinizer-ci.com/g/nickdekruijk/pageviews)
-[![Total Downloads](https://img.shields.io/packagist/dt/nickdekruijk/pageviews.svg?style=flat-square)](https://packagist.org/packages/nickdekruijk/pageviews)
+[![Latest Stable Version](https://poser.pugx.org/nickdekruijk/pageviews/v/stable)](https://packagist.org/packages/nickdekruijk/pageviews)
+[![Latest Unstable Version](https://poser.pugx.org/nickdekruijk/pageviews/v/unstable)](https://packagist.org/packages/nickdekruijk/pageviews)
+[![Monthly Downloads](https://poser.pugx.org/nickdekruijk/pageviews/d/monthly)](https://packagist.org/packages/nickdekruijk/pageviews)
+[![Total Downloads](https://poser.pugx.org/nickdekruijk/pageviews/downloads)](https://packagist.org/packages/nickdekruijk/pageviews)
+[![License](https://poser.pugx.org/nickdekruijk/pageviews/license)](https://packagist.org/packages/nickdekruijk/pageviews)
 
 A simple pageviews counter/tracker for your Laravel Application. Still in early development.
 It will anonymize visitor ip addresses by default to respect privacy laws.
