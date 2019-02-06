@@ -26,6 +26,15 @@ Then run the migration
 php artisan migrate
 ```
 
+### Integrate viewing statistics into [nickdekruijk/admin](https://github.com/nickdekruijk/admin)  package
+Add this to the modules array in `config/admin.php`:
+```php
+        'pageviews' => [
+            'view' => 'pageviews::admin',
+            'icon' => 'fa-area-chart',
+        ],
+```
+
 ### Security
 
 If you discover any security related issues, please email git@nickdekruijk.nl instead of using the issue tracker.
