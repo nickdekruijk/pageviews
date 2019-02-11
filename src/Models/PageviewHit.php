@@ -35,4 +35,13 @@ class PageviewHit extends Model
             $query->where('to', '=<', $to);
         }
     }
+
+    public function getHostAttribute($value)
+    {
+        if ($value) {
+            return $value;
+        }
+        $url = parse_url($this->referer);
+        return $url['host'] ?? null;
+    }
 }

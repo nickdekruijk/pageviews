@@ -1,5 +1,6 @@
 <table>
 @foreach(Pageviews::referers(request()->input('density') ?: 24*3600) as $referer)
+    @if (!in_array($referer->host, config('pageviews.hide_referers')) && $referer->count)
     <tr>
         <td>
             @if ($referer->referer)
@@ -10,5 +11,6 @@
         </td>
         <td>{{ $referer->count }} </td>
     </tr>
+    @endif
 @endforeach
 </table>

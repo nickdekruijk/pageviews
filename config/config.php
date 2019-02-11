@@ -52,4 +52,14 @@ return [
 //         '/\.php$/', # Don't track pages the end with .php
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | hide_referers
+    |--------------------------------------------------------------------------
+    | Don't show (top) referers from these hostnames
+    */
+    'hide_referers' => [
+        request()->getHttpHost(),
+    ],
+
 ];
