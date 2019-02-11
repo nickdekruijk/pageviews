@@ -3,6 +3,7 @@
     </head>
     <body>
         <h1>Pageviews</h1>
+        @include('pageviews::filters')
         <h2>Visitors</h2>
         @include('pageviews::visitors')
         <h2>Top referers</h2>

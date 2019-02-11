@@ -2,6 +2,7 @@
 
 @section('view')
         <section class="fullpage">
+            @include('pageviews::filters')
             @include('pageviews::visitors')
             <h2>Top referers</h2>
             @include('pageviews::referers')

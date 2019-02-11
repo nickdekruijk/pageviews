@@ -1,5 +1,5 @@
 <table>
-@foreach(Pageviews::urls(60) as $url)
+@foreach(Pageviews::urls(request()->input('density') ?: 24*3600) as $url)
     <tr>
         <td>
             @if ($url->url)

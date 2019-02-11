@@ -1,5 +1,5 @@
 <table>
-@foreach(Pageviews::referers(60) as $referer)
+@foreach(Pageviews::referers(request()->input('density') ?: 24*3600) as $referer)
     <tr>
         <td>
             @if ($referer->referer)
