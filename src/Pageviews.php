@@ -144,7 +144,7 @@ class Pageviews
     public static function parseInput($var, $input, $default = null, $carbon = false)
     {
         if ($carbon) {
-            return $var ?: (request()->input($input) ? Carbon::parse(request()->input($input)) : $default);
+            return $var ?: (request()->input($input) ? Carbon::parse(request()->input($input)) : ($default ? Carbon::parse($default) : null));
         } else {
             return $var ?: (request()->input($input) ?: $default);
         }
@@ -153,13 +153,12 @@ class Pageviews
     // Return array
     public static function visitors($density = null, $from = null, $to = null)
     {
-        $density = self::parseInput($density, 'density', 24*3600);
-        $from = self::parseCarbon($from, 'from');
-        $to = self::parseCarbon($to, 'to');
-
+        $density = self::parseInput($density, 'density', config('pageviews.default_density'));
+        $from = self::parseCarbon($from, 'from', config('pageviews.default_from'));
+//         $to = self::parseCarbon($to, 'to');
         $data = [];
         $start = $end = time();
-        foreach(PageviewSession::from($from)->to($to)->get() as $session) {
+        foreach(PageviewSession::from($from)/* ->to($to) */->get() as $session) {
             $timeslot = floor($session->time->getTimestamp() / $density) * $density;
             $start = min($start, $timeslot);
             $end = max($end, $timeslot);
@@ -206,12 +205,12 @@ class Pageviews
 
     public static function referers($density = null, $from = null, $to = null)
     {
-        $density = self::parseInput($density, 'density', 24*3600);
-        $from = self::parseCarbon($from, 'from');
-        $to = self::parseCarbon($to, 'to');
+        $density = self::parseInput($density, 'density', config('pageviews.default_density'));
+        $from = self::parseCarbon($from, 'from', config('pageviews.default_from'));
+//         $to = self::parseCarbon($to, 'to');
         return PageviewHit::select(DB::raw('count(referer) as count, referer'))
                 ->from($from)
-                ->to($to)
+//                 ->to($to)
                 ->groupBy('referer')
                 ->orderByDesc(DB::raw('count(referer)'))
                 ->get();
@@ -219,12 +218,12 @@ class Pageviews
 
     public static function urls($density = null, $from = null, $to = null)
     {
-        $density = self::parseInput($density, 'density', 24*3600);
-        $from = self::parseCarbon($from, 'from');
-        $to = self::parseCarbon($to, 'to');
+        $density = self::parseInput($density, 'density', config('pageviews.default_density'));
+        $from = self::parseCarbon($from, 'from', config('pageviews.default_from'));
+//         $to = self::parseCarbon($to, 'to');
         return PageviewHit::select(DB::raw('count(url) as count, url'))
                 ->from($from)
-                ->to($to)
+//                 ->to($to)
                 ->groupBy('url')
                 ->orderByDesc(DB::raw('count(url)'))
                 ->get();

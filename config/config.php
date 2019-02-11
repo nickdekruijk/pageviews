@@ -62,4 +62,20 @@ return [
         @$_SERVER['HTTP_HOST'],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | default_density
+    |--------------------------------------------------------------------------
+    | The default density when showing reports in seconds, default daily
+    */
+    'default_density' => 24*3600,
+
+    /*
+    |--------------------------------------------------------------------------
+    | default_from
+    |--------------------------------------------------------------------------
+    | The default from date when showing reports
+    */
+    'default_from' => '30 days ago',
+
 ];
