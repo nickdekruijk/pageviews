@@ -1,4 +1,4 @@
-<table>
+<table class="ellipsis">
 @foreach(Pageviews::urls(request()->input('density') ?: 24*3600) as $url)
     <tr>
         <td>
