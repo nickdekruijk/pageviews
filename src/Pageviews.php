@@ -143,6 +143,9 @@ class Pageviews
 
     public static function parseInput($var, $input, $default = null, $carbon = false)
     {
+        if (!$default) {
+            $default = config('pageviews.default_'.$input);
+        }
         if ($carbon) {
             return $var ?: (request()->input($input) ? Carbon::parse(request()->input($input)) : ($default ? Carbon::parse($default) : null));
         } else {
@@ -153,8 +156,8 @@ class Pageviews
     // Return array
     public static function visitors($density = null, $from = null, $to = null)
     {
-        $density = self::parseInput($density, 'density', config('pageviews.default_density'));
-        $from = self::parseCarbon($from, 'from', config('pageviews.default_from'));
+        $density = self::parseInput($density, 'density');
+        $from = self::parseCarbon($from, 'from');
 //         $to = self::parseCarbon($to, 'to');
         $data = [];
         $start = $end = time();
@@ -205,8 +208,8 @@ class Pageviews
 
     public static function referers($density = null, $from = null, $to = null)
     {
-        $density = self::parseInput($density, 'density', config('pageviews.default_density'));
-        $from = self::parseCarbon($from, 'from', config('pageviews.default_from'));
+        $density = self::parseInput($density, 'density');
+        $from = self::parseCarbon($from, 'from');
 //         $to = self::parseCarbon($to, 'to');
         return PageviewHit::select(DB::raw('count(referer) as count, referer'))
                 ->from($from)
@@ -218,8 +221,8 @@ class Pageviews
 
     public static function urls($density = null, $from = null, $to = null)
     {
-        $density = self::parseInput($density, 'density', config('pageviews.default_density'));
-        $from = self::parseCarbon($from, 'from', config('pageviews.default_from'));
+        $density = self::parseInput($density, 'density');
+        $from = self::parseCarbon($from, 'from');
 //         $to = self::parseCarbon($to, 'to');
         return PageviewHit::select(DB::raw('count(url) as count, url'))
                 ->from($from)
