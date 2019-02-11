@@ -136,7 +136,12 @@ class Pageviews
         ];
     }
 
-    public static function parseVar($var, $input, $default = null, $carbon = false)
+    public static function parseCarbon($var, $input, $default = null)
+    {
+        return self::parseInput($var, $input, $default, true);
+    }
+
+    public static function parseInput($var, $input, $default = null, $carbon = false)
     {
         if ($carbon) {
             return $var ?: (request()->input($input) ? Carbon::parse(request()->input($input)) : $default);
@@ -148,9 +153,9 @@ class Pageviews
     // Return array
     public static function visitors($density = null, $from = null, $to = null)
     {
-        $density = self::parseVar($density, 'density', 24*3600);
-        $from = self::parseVar($from, 'from', null, true);
-        $to = self::parseVar($to, 'to', null, true);
+        $density = self::parseInput($density, 'density', 24*3600);
+        $from = self::parseCarbon($from, 'from');
+        $to = self::parseCarbon($to, 'to');
 
         $data = [];
         $start = $end = time();
@@ -201,9 +206,9 @@ class Pageviews
 
     public static function referers($density = null, $from = null, $to = null)
     {
-        $density = self::parseVar($density, 'density', 24*3600);
-        $from = self::parseVar($from, 'from', null, true);
-        $to = self::parseVar($to, 'to', null, true);
+        $density = self::parseInput($density, 'density', 24*3600);
+        $from = self::parseCarbon($from, 'from');
+        $to = self::parseCarbon($to, 'to');
         return PageviewHit::select(DB::raw('count(referer) as count, referer'))
                 ->from($from)
                 ->to($to)
@@ -214,9 +219,9 @@ class Pageviews
 
     public static function urls($density = null, $from = null, $to = null)
     {
-        $density = self::parseVar($density, 'density', 24*3600);
-        $from = self::parseVar($from, 'from', null, true);
-        $to = self::parseVar($to, 'to', null, true);
+        $density = self::parseInput($density, 'density', 24*3600);
+        $from = self::parseCarbon($from, 'from');
+        $to = self::parseCarbon($to, 'to');
         return PageviewHit::select(DB::raw('count(url) as count, url'))
                 ->from($from)
                 ->to($to)
