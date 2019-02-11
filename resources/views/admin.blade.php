@@ -1,7 +1,7 @@
 @extends('admin::base')
 
 @section('view')
-        <section class="fullpage">
+        <section class="fullpage" style="overflow:auto">
             @include('pageviews::filters')
             @include('pageviews::visitors')
             <h2>Top referers</h2>
