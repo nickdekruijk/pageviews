@@ -59,7 +59,7 @@ return [
     | Don't show (top) referers from these hostnames
     */
     'hide_referers' => [
-        request()->getHttpHost(),
+        @$_SERVER['HTTP_HOST'],
     ],
 
 ];
