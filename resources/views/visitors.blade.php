@@ -6,7 +6,7 @@
             var ctx = document.getElementById("myChart").getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'line',
-                data: {!! Pageviews::visitors(request()->input('density') ?: 24*3600) !!},
+                data: {!! Pageviews::visitors() !!},
                 options: {
                     maintainAspectRatio:false,
                     scales: {

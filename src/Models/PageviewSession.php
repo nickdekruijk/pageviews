@@ -25,14 +25,14 @@ class PageviewSession extends Model
     public function scopeFrom($query, $from)
     {
         if ($from) {
-            $query->where('from', '=>', $from);
+            $query->whereDate('time', '>=', $from);
         }
     }
 
     public function scopeTo($query, $to)
     {
         if ($to) {
-            $query->where('to', '=<', $to);
+            $query->whereDate('time', '<=', $to);
         }
     }
 }

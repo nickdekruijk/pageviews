@@ -1,5 +1,5 @@
 <table class="ellipsis">
-@foreach(Pageviews::urls(request()->input('density') ?: 24*3600) as $url)
+@foreach(Pageviews::urls() as $url)
     <tr>
         <td>
             @if ($url->url)

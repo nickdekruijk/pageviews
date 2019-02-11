@@ -1,4 +1,5 @@
         <form method="get" style="text-align:center">
+            Show
             <select name="density" onchange="this.form.submit()">
                 @foreach([
                     'Per minute' => 60,
@@ -7,6 +8,22 @@
                     'Weekly' => 3600*24*7,
                 ] as $key => $value)
                 <option value="{{ $value }}"{{ (request()->input('density') ?: 24*3600) == $value ? ' selected' : '' }}>{{ $key }}</option>
+                @endforeach
+            </select>
+            &nbsp; Since
+            <select name="from" onchange="this.form.submit()">
+                @foreach([
+                    'Start' => '',
+                    'Today' => 'today',
+                    'Yesterday' => 'yesterday',
+                    '2 days ago',
+                    '3 days ago',
+                    '7 days ago',
+                    '14 days ago',
+                    '30 days ago',
+                    '60 days ago',
+                ] as $key => $value)
+                <option value="{{ $value }}"{{ (request()->input('from')) == $value ? ' selected' : '' }}>{{ is_numeric($key) ? $value : $key }}</option>
                 @endforeach
             </select>
         </form>
