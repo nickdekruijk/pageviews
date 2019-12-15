@@ -2,14 +2,14 @@
 
 namespace NickDeKruijk\Pageviews;
 
-use DB;
-use Session;
-use NickDeKruijk\Pageviews\Models\PageviewSession;
-use NickDeKruijk\Pageviews\Models\PageviewHit;
 use Carbon\Carbon;
+use DB;
 use DeviceDetector\DeviceDetector;
 use DeviceDetector\Parser\OperatingSystem;
 use GeoIp2\Database\Reader;
+use NickDeKruijk\Pageviews\Models\PageviewHit;
+use NickDeKruijk\Pageviews\Models\PageviewSession;
+use Session;
 
 class Pageviews
 {
@@ -40,7 +40,7 @@ class Pageviews
     {
         // Check for blacklisted uri
         $path = request()->getPathInfo();
-        foreach(config('pageviews.blacklist') as $pattern) {
+        foreach (config('pageviews.blacklist') as $pattern) {
             if (preg_match($pattern, $path)) {
                 return false;
             }
@@ -50,14 +50,14 @@ class Pageviews
         $session = Session::get(config('pageviews.session_variable', 'pageviews'));
         if ($forceNewSession || !$session) {
             $session = static::getVisitData(request()->header('User-Agent'));
-            $geoip = new Reader(base_path().'/vendor/bobey/geoip2-geolite2-composer/GeoIP2/GeoLite2-City.mmdb');
+            $geoip = new Reader(base_path() . '/vendor/bobey/geoip2-geolite2-composer/GeoIP2/GeoLite2-City.mmdb');
             try {
                 $record = $geoip->city(request()->ip());
                 $session['city'] = $record->city->name;
                 $session['country'] = $record->country->isoCode;
                 $session['lat'] = $record->location->latitude;
                 $session['lng'] = $record->location->longitude;
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
             }
             $session['id'] = DB::table(config('pageviews.database_prefix', 'pageviews_') . 'sessions')->insertGetId($session);
             Session::put(config('pageviews.session_variable', 'pageviews'), $session);
@@ -73,7 +73,7 @@ class Pageviews
                 'method' => request()->method(),
                 'time' => Carbon::now(),
             ]);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             if ($forceNewSession) {
                 throw new \Exception($e);
             } else {
@@ -144,7 +144,7 @@ class Pageviews
     public static function parseInput($var, $input, $default = null, $carbon = false)
     {
         if (!$default) {
-            $default = config('pageviews.default_'.$input);
+            $default = config('pageviews.default_' . $input);
         }
         if ($carbon) {
             return $var ?: (request()->input($input) ? Carbon::parse(request()->input($input)) : ($default ? Carbon::parse($default) : null));
@@ -161,25 +161,25 @@ class Pageviews
 //         $to = self::parseCarbon($to, 'to');
         $data = [];
         $start = $end = time();
-        foreach(PageviewSession::from($from)/* ->to($to) */->get() as $session) {
+        foreach (PageviewSession::from($from) /* ->to($to) */->get() as $session) {
             $timeslot = floor($session->time->getTimestamp() / $density) * $density;
             $start = min($start, $timeslot);
             $end = max($end, $timeslot);
             $data[$timeslot]['sessions'] = ($data[$timeslot]['sessions'] ?? 0) + 1;
         }
-        foreach(PageviewHit::from($from)->to($to)->get() as $hit) {
+        foreach (PageviewHit::from($from)->to($to)->get() as $hit) {
             $timeslot = floor($hit->time->getTimestamp() / $density) * $density;
             $start = min($start, $timeslot);
             $end = max($end, $timeslot);
             $data[$timeslot]['hits'] = ($data[$timeslot]['hits'] ?? 0) + 1;
         }
-        for($timeslot = $start; $timeslot <= $end; $timeslot += $density) {
+        for ($timeslot = $start; $timeslot <= $end; $timeslot += $density) {
             $data[$timeslot]['sessions'] = $data[$timeslot]['sessions'] ?? 0;
             $data[$timeslot]['hits'] = $data[$timeslot]['hits'] ?? 0;
         }
         ksort($data);
         $labels = [];
-        foreach($data as $timeslot => $row) {
+        foreach ($data as $timeslot => $row) {
             $labels[$timeslot] = Carbon::createFromTimestamp($timeslot)->formatLocalized('%a %e %h %H:%M');
         }
         return json_encode([
@@ -189,20 +189,20 @@ class Pageviews
                     'label' => 'Unique visitors',
                     'data' => array_column($data, 'sessions'),
                     'borderColor' => '#4455CC',
-                    'backgroundColor' => '#ccddee'
-                ],[
+                    'backgroundColor' => '#ccddee',
+                ], [
                     'label' => 'Pageviews',
                     'data' => array_column($data, 'hits'),
-                    'borderWidth' => 1
+                    'borderWidth' => 1,
 /*
-                ],[
-                    'label' => 'Active users',
-                    'data' => array_column($data, 'active'),
-                    'borderColor' => '#44CC55',
-                    'borderWidth' => 1
-*/
-                ]
-            ]
+],[
+'label' => 'Active users',
+'data' => array_column($data, 'active'),
+'borderColor' => '#44CC55',
+'borderWidth' => 1
+ */
+                ],
+            ],
         ], JSON_PRETTY_PRINT);
     }
 
@@ -212,11 +212,11 @@ class Pageviews
         $from = self::parseCarbon($from, 'from');
 //         $to = self::parseCarbon($to, 'to');
         return PageviewHit::select(DB::raw('count(referer) as count, referer'))
-                ->from($from)
+            ->from($from)
 //                 ->to($to)
-                ->groupBy('referer')
-                ->orderByDesc(DB::raw('count(referer)'))
-                ->get();
+            ->groupBy('referer')
+            ->orderByDesc(DB::raw('count(referer)'))
+            ->get();
     }
 
     public static function urls($density = null, $from = null, $to = null)
@@ -225,10 +225,10 @@ class Pageviews
         $from = self::parseCarbon($from, 'from');
 //         $to = self::parseCarbon($to, 'to');
         return PageviewHit::select(DB::raw('count(url) as count, url'))
-                ->from($from)
+            ->from($from)
 //                 ->to($to)
-                ->groupBy('url')
-                ->orderByDesc(DB::raw('count(url)'))
-                ->get();
+            ->groupBy('url')
+            ->orderByDesc(DB::raw('count(url)'))
+            ->get();
     }
 }
