@@ -161,6 +161,7 @@ class Pageviews
 //         $to = self::parseCarbon($to, 'to');
         $data = [];
         $start = $end = time();
+        ini_set('memory_limit', '1G');
         foreach (PageviewSession::from($from) /* ->to($to) */->get() as $session) {
             $timeslot = floor($session->time->getTimestamp() / $density) * $density;
             $start = min($start, $timeslot);
