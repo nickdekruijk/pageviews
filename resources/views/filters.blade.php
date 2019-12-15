@@ -13,7 +13,7 @@
             &nbsp; Since
             <select name="from" onchange="this.form.submit()">
                 @foreach([
-                    'Start' => '',
+                    'Start' => '1970-01-01',
                     'Today' => 'today',
                     'Yesterday' => 'yesterday',
                     '2 days ago',
@@ -22,6 +22,7 @@
                     '14 days ago',
                     '30 days ago',
                     '60 days ago',
+                    '365 days ago',
                 ] as $key => $value)
                 <option value="{{ $value }}"{{ (request()->input('from') ?: config('pageviews.default_from')) == $value ? ' selected' : '' }}>{{ is_numeric($key) ? $value : $key }}</option>
                 @endforeach
