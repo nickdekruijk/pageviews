@@ -29,7 +29,7 @@ class Pageviews
         if (strlen($ip) == 4) {
             return inet_ntop($ip & inet_pton('255.255.255.0'));
         } elseif (strlen($ip) == 16) {
-            return net_ntop($ip & inet_pton('ffff:ffff:ffff:ffff:0000:0000:0000:0000'));
+            return inet_ntop($ip & inet_pton('ffff:ffff:ffff:ffff:0000:0000:0000:0000'));
         } else {
             return false;
         }
