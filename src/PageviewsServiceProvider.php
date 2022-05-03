@@ -15,8 +15,8 @@ class PageviewsServiceProvider extends ServiceProvider
          * Optional methods to load your package assets
          */
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'pageviews');
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'pageviews');
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'pageviews');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         if (config('pageviews.middleware', true)) {
@@ -25,7 +25,7 @@ class PageviewsServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('pageviews.php'),
+                __DIR__ . '/../config/config.php' => config_path('pageviews.php'),
             ], 'config');
 
             // Publishing the views.
@@ -54,7 +54,7 @@ class PageviewsServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'pageviews');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'pageviews');
 
         // Register the main class to use with the facade
         $this->app->singleton('pageviews', function () {

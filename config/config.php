@@ -46,10 +46,10 @@ return [
     | Don't track uri's starting with (regex against url path without hostname)
     */
     'blacklist' => [
-//         '/^\/'.config('admin.adminpath').'\//', # Don't track nickdekruijk/admin pages
-//         '/^\/admin\//', # Don't track pages that start with domain.com/admin/
-//         '/^\/secret\/$/', # Don't track pages that matches with domain.com/secret/
-//         '/\.php$/', # Don't track pages the end with .php
+        // '/^\/' . config('admin.adminpath') . '\//', # Don't track nickdekruijk/admin pages
+        // '/^\/admin\//', # Don't track pages that start with domain.com/admin/
+        // '/^\/secret\/$/', # Don't track pages that matches with domain.com/secret/
+        // '/\.php$/', # Don't track pages that end with .php
     ],
 
     /*
@@ -68,7 +68,7 @@ return [
     |--------------------------------------------------------------------------
     | The default density when showing reports in seconds, default daily
     */
-    'default_density' => 24*3600,
+    'default_density' => 24 * 3600,
 
     /*
     |--------------------------------------------------------------------------

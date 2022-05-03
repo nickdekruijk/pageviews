@@ -158,7 +158,7 @@ class Pageviews
     {
         $density = self::parseInput($density, 'density');
         $from = self::parseCarbon($from, 'from');
-//         $to = self::parseCarbon($to, 'to');
+        // $to = self::parseCarbon($to, 'to');
         $data = [];
         $start = $end = time();
         ini_set('memory_limit', '1G');
@@ -195,13 +195,11 @@ class Pageviews
                     'label' => 'Pageviews',
                     'data' => array_column($data, 'hits'),
                     'borderWidth' => 1,
-/*
-],[
-'label' => 'Active users',
-'data' => array_column($data, 'active'),
-'borderColor' => '#44CC55',
-'borderWidth' => 1
- */
+                    // ], [
+                    //     'label' => 'Active users',
+                    //     'data' => array_column($data, 'active'),
+                    //     'borderColor' => '#44CC55',
+                    //     'borderWidth' => 1
                 ],
             ],
         ], JSON_PRETTY_PRINT);
@@ -211,10 +209,10 @@ class Pageviews
     {
         $density = self::parseInput($density, 'density');
         $from = self::parseCarbon($from, 'from');
-//         $to = self::parseCarbon($to, 'to');
+        // $to = self::parseCarbon($to, 'to');
         return PageviewHit::select(DB::raw('count(referer) as count, referer'))
             ->from($from)
-//                 ->to($to)
+            // ->to($to)
             ->groupBy('referer')
             ->orderByDesc(DB::raw('count(referer)'))
             ->get();
@@ -224,10 +222,10 @@ class Pageviews
     {
         $density = self::parseInput($density, 'density');
         $from = self::parseCarbon($from, 'from');
-//         $to = self::parseCarbon($to, 'to');
+        // $to = self::parseCarbon($to, 'to');
         return PageviewHit::select(DB::raw('count(url) as count, url'))
             ->from($from)
-//                 ->to($to)
+            // ->to($to)
             ->groupBy('url')
             ->orderByDesc(DB::raw('count(url)'))
             ->get();
