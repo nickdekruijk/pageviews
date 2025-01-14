@@ -181,7 +181,7 @@ class Pageviews
         ksort($data);
         $labels = [];
         foreach ($data as $timeslot => $row) {
-            $labels[$timeslot] = Carbon::createFromTimestamp($timeslot)->formatLocalized('%a %e %h %H:%M');
+            $labels[$timeslot] = Carbon::createFromTimestamp($timeslot)->isoFormat('dd DD MMM hh:mm');
         }
         return json_encode([
             'labels' => array_values($labels),
